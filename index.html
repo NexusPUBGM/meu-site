@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Scrim | PUBG Mobile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#D4AF37',
+                        black: '#000000',
+                        offblack: '#0a0a0a'
+                    },
+                    fontFamily: {
+                        display: ['Montserrat', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Cursor personalizado de mira para o Easter Egg */
+        .cursor-crosshair {
+            cursor: crosshair !important;
+        }
+
+        /* ANIMAÇÃO EXPLOSIVA DOS BOTÕES */
+        .btn-explosive {
+            position: relative;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
+        }
+        .btn-explosive:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), inset 0 0 10px rgba(212, 175, 55, 0.1);
+            text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+        }
+        .btn-explosive:active {
+            animation: shake 0.3s ease-in-out;
+            transform: scale(0.95) !important;
+        }
+        .btn-explosive::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(212, 175, 55, 0.8);
+            border-radius: inherit;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .btn-explosive:active::after {
+            animation: shockwave 0.6s ease-out;
+        }
+
+        @keyframes shake {
+            0% { transform: scale(0.95) translate(1px, 1px) rotate(0deg); }
+            20% { transform: scale(0.95) translate(-2px, -1px) rotate(-1deg); }
+            40% { transform: scale(0.95) translate(2px, 2px) rotate(1deg); }
+            60% { transform: scale(0.95) translate(-1px, 1px) rotate(0deg); }
+            80% { transform: scale(0.95) translate(1px, -2px) rotate(-1deg); }
+            100% { transform: scale(0.95) translate(0, 0) rotate(0deg); }
+        }
+
+        @keyframes shockwave {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; border: 1px solid #D4AF37; }
+        }
+
+        /* ANIMAÇÕES DOS AIRDROPS AO FUNDO */
+        .bg-element {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.25; /* Sutil nas laterais */
+        }
+
+        .airdrop-anim-1 {
+            animation: dropAirdrop 18s linear infinite;
+            animation-delay: 1s;
+        }
+
+        .airdrop-anim-2 {
+            animation: dropAirdrop2 24s linear infinite;
+            animation-delay: 8s;
+        }
+
+        @keyframes dropAirdrop {
+            0% { left: 10%; top: -20%; opacity: 0; transform: rotate(-3deg); }
+            10% { opacity: 0.3; transform: rotate(2deg); }
+            90% { opacity: 0.3; }
+            100% { left: 18%; top: 110%; opacity: 0; transform: rotate(-2deg); }
+        }
+
+        @keyframes dropAirdrop2 {
+            0% { left: 80%; top: -25%; opacity: 0; transform: rotate(4deg); }
+            10% { opacity: 0.25; transform: rotate(-2deg); }
+            90% { opacity: 0.25; }
+            100% { left: 72%; top: 110%; opacity: 0; transform: rotate(3deg); }
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-200 font-body relative selection:bg-gold selection:text-black">
+
+    <!-- Animações de Fundo: Airdrops do PUBG Descendo de Paraquedas -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <!-- Airdrop 1 (Esquerda) -->
+        <svg class="bg-element airdrop-anim-1 w-36 h-36 md:w-48 md:h-48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8">
+            <!-- Paraquedas -->
+            <path d="M12 2C7 2 3 5 3 7c0 1 1 2 2 2h14c1 0 2-1 2-2 0-2-4-5-9-5z" fill="#D4AF37" fill-opacity="0.15" stroke="#D4AF37"/>
+            <path d="M12 9v6M7 7l5 8M17 7l-5 8" stroke="#D4AF37" stroke-dasharray="0.5 0.5"/>
+            <!-- Caixa do Airdrop -->
+            <rect x="9" y="15" width="6" height="6" fill="#1a1a1a" stroke="#D4AF37" stroke-width="1.2"/>
+            <path d="M9 18h6M12 15v6" stroke="#D4AF37" stroke-width="0.8"/>
+        </svg>
+
+        <!-- Airdrop 2 (Direita) -->
+        <svg class="bg-element airdrop-anim-2 w-28 h-28 md:w-36 md:h-36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8">
+            <!-- Paraquedas -->
+            <path d="M12 2C7 2 3 5 3 7c0 1 1 2 2 2h14c1 0 2-1 2-2 0-2-4-5-9-5z" fill="#D4AF37" fill-opacity="0.15" stroke="#D4AF37"/>
+            <path d="M12 9v6M7 7l5 8M17 7l-5 8" stroke="#D4AF37" stroke-dasharray="0.5 0.5"/>
+            <!-- Caixa do Airdrop -->
+            <rect x="9" y="15" width="6" height="6" fill="#1a1a1a" stroke="#D4AF37" stroke-width="1.2"/>
+            <path d="M9 18h6M12 15v6" stroke="#D4AF37" stroke-width="0.8"/>
+        </svg>
+    </div>
+
+    <!-- Airdrop Modal (Easter Egg) -->
+    <div id="airdrop-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/95 opacity-0 transition-opacity duration-300 backdrop-blur-md">
+        <div class="border border-gold p-8 max-w-sm w-full mx-4 text-center bg-offblack shadow-[0_0_30px_rgba(212,175,55,0.15)]">
+            <svg class="w-12 h-12 mx-auto text-gold mb-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+            </svg>
+            <h3 id="modal-title" class="text-gold font-display font-bold uppercase tracking-widest mb-4">Suprimentos</h3>
+            <p id="modal-text" class="text-sm font-light text-gray-300 mb-8 leading-relaxed">
+                Você encontrou o Airdrop secreto. A vantagem tática agora é toda sua. Nos vemos no lobby.
+            </p>
+            <button onclick="closeModal()" class="btn-explosive w-full py-4 border border-white/20 text-white font-display text-xs uppercase tracking-widest hover:border-gold hover:text-gold focus:outline-none bg-black">
+                Dispensar
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER (Centralizado com bastante respiro nas laterais) -->
+    <main class="max-w-xl mx-auto flex flex-col min-h-screen relative z-10 px-6">
+        
+        <!-- NAVEGAÇÃO -->
+        <nav class="w-full flex justify-center py-12">
+            <ul class="flex space-x-12 text-xs font-display tracking-[0.2em] uppercase">
+                <li><a href="#INÍCIO" class="text-white hover:text-gold transition-colors">Home</a></li>
+                <li><a href="#INSCRIÇÃO" class="text-white hover:text-gold transition-colors">Inscrições</a></li>
+                <li><a href="#DÚVIDAS" class="text-white hover:text-gold transition-colors">Dúvidas</a></li>
+            </ul>
+        </nav>
+
+        <!-- 1. HOME SECTION -->
+        <section id="home" class="flex-grow flex flex-col items-center justify-center text-center py-20">
+            <h1 class="text-5xl md:text-7xl font-display font-black tracking-tighter text-white mb-2">
+                NEXUS
+            </h1>
+            <h1 class="text-2xl md:text-3xl font-display font-light tracking-[0.4em] text-gold mb-8 uppercase">
+                Scrim
+            </h1>
+            
+            <p class="font-light text-gray-400 leading-relaxed mb-12 text-sm md:text-base">
+                O circuito de elite do PUBG Mobile. Um ambiente focado na habilidade, estratégia e precisão da sua equipe no campo de 
+                <span class="text-white hover:text-gold transition-colors duration-300 cursor-crosshair">batalha</span>.
+            </p>
+
+            <a href="#inscricoes" class="btn-explosive bg-black inline-flex items-center justify-center px-10 py-4 font-display text-xs tracking-widest uppercase border border-gold text-gold focus:outline-none">
+                INSCREVA-SE
+            </a>
+        </section>
+
+        <!-- 2. INSCRIÇÕES SECTION -->
+        <section id="inscricoes" class="w-full py-24 border-t border-white/10 flex flex-col items-center text-center">
+            <h2 class="text-xl font-display font-bold uppercase tracking-widest text-white mb-4">Inscrições</h2>
+            <div class="w-[1px] h-12 bg-gold mb-8 opacity-50"></div>
+            
+            <p class="font-light text-gray-400 mb-10 text-sm">
+                As vagas para o próximo circuito estão abertas. Verifique se todos os membros da sua squad cumprem os requisitos antes de prosseguir.
+            </p>
+
+            <!-- Link para o Typeform -->
+            <a href="https://form.typeform.com/to/your-form-id" target="_blank" rel="noopener noreferrer" class="btn-explosive bg-offblack inline-flex items-center justify-center px-12 py-5 font-display text-xs tracking-widest uppercase border border-white/20 text-white hover:border-gold hover:text-gold focus:outline-none">
+                Acessar Formulário
+            </a>
+        </section>
+
+        <!-- 3. DÚVIDAS SECTION -->
+        <section id="duvidas" class="w-full py-24 border-t border-white/10 flex flex-col items-center text-center">
+            <h2 class="text-xl font-display font-bold uppercase tracking-widest text-white mb-4">Dúvidas Frequentes</h2>
+            <div class="w-[1px] h-12 bg-gold mb-12 opacity-50"></div>
+
+            <div class="w-full space-y-6 text-left">
+                <!-- Item de Dúvida -->
+                <div class="border border-white/5 p-6 bg-offblack hover:border-gold/30 transition-colors duration-300">
+                    <h3 class="text-gold font-display text-sm font-bold uppercase tracking-wider mb-2">Qual o formato das partidas?</h3>
+                    <p class="text-gray-400 text-sm font-light leading-relaxed">
+                        Trabalhamos com o formato padrão competitivo internacional, priorizando rotações limpas e confrontos de alto nível.
+                    </p>
+                </div>
+                <!-- Item de Dúvida -->
+                <div class="border border-white/5 p-6 bg-offblack hover:border-gold/30 transition-colors duration-300">
+                    <h3 class="text-gold font-display text-sm font-bold uppercase tracking-wider mb-2">Como funciona o check-in?</h3>
+                    <p class="text-gray-400 text-sm font-light leading-relaxed">
+                        O check-in deve ser realizado com 30 minutos de antecedência no nosso servidor oficial para garantir a vaga da squad.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. FOOTER -->
+        <footer class="w-full py-16 border-t border-white/10 flex flex-col items-center">
+            
+            <!-- Instagram Link -->
+            <a href="#seu-link-do-instagram-aqui" target="_blank" rel="noopener noreferrer" class="btn-explosive bg-offblack inline-flex items-center justify-center w-14 h-14 mb-8 border border-white/20 rounded-full text-gray-400 hover:border-gold hover:text-gold focus:outline-none">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+            </a>
+            
+            <p class="text-[10px] font-light text-gray-600 tracking-[0.2em] uppercase">
+                &copy; 2024 Nexus Scrim.
+            </p>
+            
+            <!-- Ponto do Easter Egg no rodapé -->
+            <div onclick="triggerAirdrop()" class="w-1.5 h-1.5 bg-gold/30 rounded-full cursor-crosshair mt-8 hover:bg-gold transition-colors duration-300 relative z-20"></div>
+        </footer>
+
+    </main>
+
+    <!-- SCRIPTS PARA O MODAL DO EASTER EGG -->
+    <script>
+        const modal = document.getElementById('airdrop-modal');
+
+        function triggerAirdrop() {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.classList.add('opacity-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+    </script>
+</body>
+</html>
